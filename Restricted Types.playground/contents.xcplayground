@@ -3,8 +3,6 @@
     <pages>
         <page name='Swift&apos;s Type Safety'/>
         <page name='Baby&apos;s First Subsets'/>
-        <page name='Abstracting Validated Strings'/>
-        <page name='Generic Validator'/>
-        <page name='Combining Validators'/>
+        <page name='Generic Subset Type'/>
     </pages>
 </playground>
