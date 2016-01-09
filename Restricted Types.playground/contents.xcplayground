@@ -5,5 +5,6 @@
         <page name='Baby&apos;s First Subsets'/>
         <page name='Generic Subset Type'/>
         <page name='Composing Predicates'/>
+        <page name='Compile Time Values'/>
     </pages>
 </playground>
