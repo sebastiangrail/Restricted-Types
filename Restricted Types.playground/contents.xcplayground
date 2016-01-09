@@ -4,5 +4,6 @@
         <page name='Swift&apos;s Type Safety'/>
         <page name='Baby&apos;s First Subsets'/>
         <page name='Generic Subset Type'/>
+        <page name='Composing Predicates'/>
     </pages>
 </playground>
