@@ -106,8 +106,38 @@ struct FunctionPredicate <F: Function where F.Out == Bool>: Predicate {
     }
 }
 
-//struct Add <A: StaticValue, B: StaticValue where A.Value == Double, B.Value == Double>: Function {
-//
-//}
+protocol F {
+    typealias In: StaticValue
+    typealias Out: StaticValue
+}
 
+
+
+struct Add <A: StaticValue, B: StaticValue where A.Value == Double, B.Value == Double>: StaticValue {
+    static var value: Double {
+        return A.value + B.value
+    }
+}
+
+typealias Two = Add<DoubleOne, DoubleOne>
+typealias Four = Add<Two, Two>
+Four.value
+
+struct Apply <F: Function, A: StaticValue, B: StaticValue where F.In == (A.Value, B.Value)>: StaticValue {
+    static var value: F.Out {
+        return F.apply((A.value, B.value))
+    }
+}
+
+struct AddF: Function {
+    typealias In = (Double, Double)
+    typealias Out = Double
+    
+    static func apply(value: In) -> Out {
+        return value.0 + value.1
+    }
+}
+
+typealias Two_ = Apply<AddF, DoubleOne, DoubleOne>
+Two_.value
 
