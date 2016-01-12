@@ -7,5 +7,6 @@
         <page name='Composing Predicates'/>
         <page name='Compile Time Values'/>
         <page name='Functions'/>
+        <page name='Expsoing Methods'/>
     </pages>
 </playground>
