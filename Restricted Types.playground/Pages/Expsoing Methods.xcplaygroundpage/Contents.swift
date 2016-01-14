@@ -77,3 +77,34 @@ greeting.tryPerform(String.stringByAppendingString, arg: "!")?.value
 
 print(greeting.tryPerform(nonMutating(String.appendContentsOf), arg: "!")?.value)
 
+struct S <Predicate: Function, Fallback: Function where Predicate.In == Fallback.In, Predicate.Out == Bool, Fallback.Out == Subset<Predicate>> {
+    let value: Predicate.In
+    
+    init (value: Predicate.In) {
+        if Predicate.apply(value) {
+            self.value = value
+        } else {
+            self.value = Fallback.apply(value).value
+        }
+    }
+}
+
+
+struct ForceNonEmpty: Function {
+    static func apply(value: String) -> Subset<IsNonEmptyString> {
+        if let result = Subset<IsNonEmptyString>(value: value) {
+            return result
+        } else {
+            return Subset<IsNonEmptyString>(value: "Default")!
+        }
+    }
+}
+
+typealias Foo = S<IsNonEmptyString, ForceNonEmpty>
+print(Foo(value: "Hello").value)
+print(Foo(value: "").value)
+
+//struct S <F: Function, G: Function where F.Out == Bool, G.In == F.In, G.Out == Subset<F>> {
+//    
+//}
+
