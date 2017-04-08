@@ -17,7 +17,7 @@ struct _UppercaseString {
     let string: String
     
     init? (string: String) {
-        guard string.uppercaseString == string else {
+        guard string.uppercased() == string else {
             return nil
         }
         self.string = string
@@ -37,7 +37,7 @@ Instead we need a way to fix the predicate at compile time.
 */
 
 protocol StringPredicate {
-    static func isValid (string: String) -> Bool
+    static func isValid (_ string: String) -> Bool
 }
 
 struct StringSubset <P: StringPredicate> {
@@ -54,14 +54,14 @@ struct StringSubset <P: StringPredicate> {
 //: To implement a non-empty String and an uppercase String we now need custom predicates for those types:
 
 struct IsNonEmptyString: StringPredicate {
-    static func isValid(string: String) -> Bool {
+    static func isValid(_ string: String) -> Bool {
         return !string.isEmpty
     }
 }
 
 struct IsUppercaseString: StringPredicate {
-    static func isValid(string: String) -> Bool {
-        return string.uppercaseString == string
+    static func isValid(_ string: String) -> Bool {
+        return string.uppercased() == string
     }
 }
 

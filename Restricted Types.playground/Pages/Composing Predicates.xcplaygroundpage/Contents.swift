@@ -1,9 +1,9 @@
 //: What if we want a non-empty uppercase string? Is there a way to compose the predicates?
 
 protocol Predicate {
-    typealias Argument
+    associatedtype Argument
     
-    static func isValid (value: Argument) -> Bool
+    static func isValid (_ value: Argument) -> Bool
 }
 
 struct Subset <P: Predicate> {
@@ -18,20 +18,20 @@ struct Subset <P: Predicate> {
 }
 
 struct IsNonEmptyString: Predicate {
-    static func isValid(value: String) -> Bool {
+    static func isValid(_ value: String) -> Bool {
         return !value.isEmpty
     }
 }
 
 struct IsUppercaseString: Predicate {
-    static func isValid(value: String) -> Bool {
-        return value.uppercaseString == value
+    static func isValid(_ value: String) -> Bool {
+        return value.uppercased() == value
     }
 }
 
 
-struct And <A: Predicate, B: Predicate where A.Argument == B.Argument>: Predicate {
-    static func isValid(value: A.Argument) -> Bool {
+struct And <A: Predicate, B: Predicate>: Predicate where A.Argument == B.Argument {
+    static func isValid(_ value: A.Argument) -> Bool {
         return A.isValid(value) && B.isValid(value)
     }
 }
@@ -43,8 +43,8 @@ let b = NonEmptyUppercaseString(value: "foo")
 let c = NonEmptyUppercaseString(value: "FOO")
 
 
-struct Or <A: Predicate, B: Predicate where A.Argument == B.Argument>: Predicate {
-    static func isValid(value: A.Argument) -> Bool {
+struct Or <A: Predicate, B: Predicate>: Predicate where A.Argument == B.Argument {
+    static func isValid(_ value: A.Argument) -> Bool {
         return A.isValid(value) || B.isValid(value)
     }
 }

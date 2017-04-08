@@ -1,10 +1,12 @@
+//: [Back to Introduction](Introduction)
+
 //: # Swift's Type System
 
 /*:
 Swift has a very strict type system:
 Given a function that takes an `Int`, we can only ever pass an `Int` as the argument
 */
-func increase (n: Int) -> Int {
+func increase (_ n: Int) -> Int {
     return n + 1
 }
 

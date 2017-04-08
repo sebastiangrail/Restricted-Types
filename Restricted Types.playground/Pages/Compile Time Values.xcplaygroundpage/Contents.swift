@@ -1,8 +1,8 @@
 
 protocol Predicate {
-    typealias Argument
+    associatedtype Argument
     
-    static func isValid (value: Argument) -> Bool
+    static func isValid (_ value: Argument) -> Bool
 }
 
 struct Subset <P: Predicate> {
@@ -16,21 +16,21 @@ struct Subset <P: Predicate> {
     }
 }
 
-struct And <A: Predicate, B: Predicate where A.Argument == B.Argument>: Predicate {
-    static func isValid(value: A.Argument) -> Bool {
+struct And <A: Predicate, B: Predicate>: Predicate where A.Argument == B.Argument {
+    static func isValid(_ value: A.Argument) -> Bool {
         return A.isValid(value) && B.isValid(value)
     }
 }
 
 
-struct Or <A: Predicate, B: Predicate where A.Argument == B.Argument>: Predicate {
-    static func isValid(value: A.Argument) -> Bool {
+struct Or <A: Predicate, B: Predicate>: Predicate where A.Argument == B.Argument {
+    static func isValid(_ value: A.Argument) -> Bool {
         return A.isValid(value) || B.isValid(value)
     }
 }
 
 protocol StaticValue {
-    typealias Value
+    associatedtype Value
     
     static var value: Value { get }
 }
@@ -43,20 +43,20 @@ struct DoubleOne: StaticValue {
     static var value: Double { return 1 }
 }
 
-struct GreaterThan <V: StaticValue where V.Value: Comparable> : Predicate {
-    static func isValid(value: V.Value) -> Bool {
+struct GreaterThan <V: StaticValue> : Predicate where V.Value: Comparable {
+    static func isValid(_ value: V.Value) -> Bool {
         return value > V.value
     }
 }
 
-struct LesserThan <V: StaticValue where V.Value: Comparable> : Predicate {
-    static func isValid(value: V.Value) -> Bool {
+struct LesserThan <V: StaticValue> : Predicate where V.Value: Comparable {
+    static func isValid(_ value: V.Value) -> Bool {
         return value < V.value
     }
 }
 
-struct EqualTo <V: StaticValue where V.Value: Equatable> : Predicate {
-    static func isValid(value: V.Value) -> Bool {
+struct EqualTo <V: StaticValue> : Predicate where V.Value: Equatable {
+    static func isValid(_ value: V.Value) -> Bool {
         return value == V.value
     }
 }
